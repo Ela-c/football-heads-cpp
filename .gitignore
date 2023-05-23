@@ -1,0 +1,7 @@
+.vscode/
+include/
+.editorconfig
+*.exe
+!game.exe
+*.log
+updates.txt
