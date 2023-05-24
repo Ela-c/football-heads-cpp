@@ -1,5 +1,6 @@
 #include "soccer_ball.h"
 #include <math.h>
+#include <iostream>
 
 soccer_ball_data new_ball()
 {
@@ -14,6 +15,9 @@ soccer_ball_data new_ball()
     result.center.y = 0;
 
     result.elasticity = 0.6;
+
+    result.kinetic_friction_coefficient = 0.6;
+    result.static_friction_coefficient = 0.8;
 
     // set position
     sprite_set_x(result.ball_sprite, result.center.x - result.radius);
@@ -34,39 +38,58 @@ soccer_ball_data new_ball()
 
 void bounce_ball_against_screen(soccer_ball_data &ball)
 {
+    // if the ball is trying to scape from the right side of the screen, make it bounce
     if ( ball.center.x < ball.radius)
     {
         sprite_set_center(ball.ball_sprite, ball.radius, ball.center.y);
         ball.dx *= -1; 
     }
+    // if the ball is trying to scape from the left side of the screen, make it bounce
     else if ( ball.center.x + ball.radius > WIDTH)
     {
         sprite_set_center(ball.ball_sprite, WIDTH - ball.radius, ball.center.y);
         ball.dx *= -1;
     }
 
+    // if the ball is trying to scape from the top of the screen, make it bounce
     if ( ball.center.y < ball.radius )
     {
         sprite_set_center(ball.ball_sprite, ball.center.x, ball.radius);
         ball.dy *= -1;
     }
-    else if ( ball.center.y + ball.radius < HEIGHT)
+    
+    // apply gravity to the ball when it is on the air
+    if ( ball.center.y + ball.radius < HEIGHT)
     {
         ball.dy += GRAVITY;
     }
+
+    // if the ball is on the floor, then make it bounce and apply friction for the Vx component.
     else
     {
-        sprite_set_center(ball.ball_sprite, ball.center.x, HEIGHT - ball.radius);   
+        //std::cout << "AFTER: position of the sprite (" << sprite_x(ball.ball_sprite) << ", " << sprite_y(ball.ball_sprite) << ")" << std::endl;
+        //std::cout << "Vx: " << sprite_dx(ball.ball_sprite) << std::endl;
+        sprite_set_center(ball.ball_sprite, ball.center.x, HEIGHT - ball.radius);
+        // bounce
         ball.dy *= -ball.elasticity;
-        if ( fabsf(ball.dy) < 0.01)
+        
+        if ( fabsf(ball.dy) < 0.7)
         {
             ball.dy = 0;
         }
-            
+        
+        if (ball.dx > 0) // it moves to the right
+            ball.dx -= ball.kinetic_friction_coefficient*GRAVITY;
+        else if (ball.dx < 0)
+            ball.dx += ball.kinetic_friction_coefficient*GRAVITY;
+        
+        if ( fabsf(ball.dx) < 0.7)
+        {
+            ball.dx = 0;
+        }
     }
 
-    //cout << "AFTER: position of the sprite (" << sprite_x(ball.ball_sprite) << ", " << sprite_y(ball.ball_sprite) << ")" << endl;
-    //cout << "velocity vector X: " << ball.dx << " Y: " << ball.dy << endl;
+    
     sprite_set_dx(ball.ball_sprite, ball.dx);
     //write_line((float)ball.dy);
     sprite_set_dy(ball.ball_sprite, ball.dy); // Reverse the direction

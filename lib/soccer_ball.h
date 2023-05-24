@@ -13,6 +13,8 @@ struct soccer_ball_data
     double dy;
     vector_2d acceleration;
     double elasticity;
+    double kinetic_friction_coefficient;
+    double static_friction_coefficient;
 };
 
 soccer_ball_data new_ball();

@@ -6,11 +6,11 @@
 #define WIDTH 800 //window width
 #define HEIGHT 600 // window height
 #define BALL_SPEED 2
-#define GRAVITY 0.02
+#define GRAVITY 0.5
 
 enum elasticity_type
 {
-    
+
 };
 
 void sprite_set_center(sprite &object, double x, double y);
