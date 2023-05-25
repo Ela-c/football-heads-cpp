@@ -1,8 +1,38 @@
 #include "game.h"
-
+#include <math.h>
 void load_resources()
 {
     load_resource_bundle("game_bundle", "football_heads.txt");
+}
+
+void draw_score(const game_data &game)
+{
+    
+}
+
+void update_object_collisions(game_data game)
+{
+    player_data player_1, player_2;
+
+    player_1 = game.player[0];
+    player_2 = game.player[1];
+
+    if(sprite_collision(player_1.player_sprite, player_2.player_sprite))
+    {
+        // do something
+        
+        // distance between the sprite centers
+        //double distance = sqrt( pow(center_point(player_1.player_sprite).x - center_point(player_2.player_sprite).x, 2) + pow(center_point(player_1.player_sprite).y - center_point(player_2.player_sprite).y,2));
+    }
+    else if(sprite_collision(game.player[0].player_sprite, game.ball.ball_sprite))
+    {
+        // do something
+    }
+
+    if(sprite_collision(game.player[1].player_sprite, game.ball.ball_sprite))
+    {
+        // do something
+    }
 }
 
 void handle_input(player_data players[])

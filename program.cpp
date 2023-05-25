@@ -11,6 +11,7 @@ int main()
     load_resources();
 
     soccer_ball_data ball = new_ball();
+    player_data player_2 = new_player(2);
 
     int size = 70;
 
@@ -22,7 +23,7 @@ int main()
         update_ball(ball);
         fill_rectangle(COLOR_GREEN, WIDTH/2 - size/2, HEIGHT/2 - size/2, size, size);
         draw_ball(ball);
-
+        draw_player(player_2);
         refresh_screen(60);
     }
 

@@ -16,8 +16,8 @@ soccer_ball_data new_ball()
 
     result.elasticity = 0.6;
 
-    result.kinetic_friction_coefficient = 0.6;
-    result.static_friction_coefficient = 0.8;
+    result.kinetic_friction_coefficient = 0.8;
+    result.static_friction_coefficient = 1;
 
     // set position
     sprite_set_x(result.ball_sprite, result.center.x - result.radius);
@@ -28,13 +28,15 @@ soccer_ball_data new_ball()
     //sprite_set_collision_kind(result.ball_sprite, AABB_COLLISIONS);
 
     // set velocity of the ball
-    result.dx = 5;
+    result.dx = 10;
     result.dy = 0;
     sprite_set_dx(result.ball_sprite, result.dx);
     sprite_set_dy(result.ball_sprite, result.dy);
 
     return result;
 }
+
+// TODO: OBJECT COLLISION
 
 void bounce_ball_against_screen(soccer_ball_data &ball)
 {

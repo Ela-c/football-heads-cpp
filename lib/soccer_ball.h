@@ -2,10 +2,10 @@
 #define SOCCER_BALL_H
 
 #include "game_physics.h"
+#include "player.h"
 
 struct soccer_ball_data
 {
-    int id;
     sprite ball_sprite;
     point_2d center;
     double radius;

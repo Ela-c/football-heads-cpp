@@ -2,11 +2,12 @@
 #define GAME_PHYSICS_H
 
 #include "splashkit.h"
+#include <math.h>
 
 #define WIDTH 800 //window width
 #define HEIGHT 600 // window height
 #define BALL_SPEED 2
-#define GRAVITY 0.5
+#define GRAVITY 0.3
 
 enum elasticity_type
 {
