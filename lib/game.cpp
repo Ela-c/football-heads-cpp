@@ -81,11 +81,45 @@ game_data new_game()
     return result;
 }
 
+void handle_collisions(player_data player, soccer_ball_data ball)
+{
+    circle bounding_circle_player, bounding_circle_ball;
+
+    bounding_circle_player = sprite_circle(player.player_sprite);
+    bounding_circle_ball = sprite_circle(ball.ball_sprite);
+
+    if(circles_intersect(bounding_circle_ball, bounding_circle_player))
+    {
+        // static collision
+        float distance; //distance between the sprite centers
+        float overlap;
+
+        distance = point_point_distance(bounding_circle_ball.center, bounding_circle_player.center);
+
+        overlap = 0.5*(distance - bounding_circle_ball.radius - bounding_circle_player.radius);
+
+        double move_x = overlap * (bounding_circle_ball.center.x - bounding_circle_player.center.x)/distance;
+        double move_y = overlap * (bounding_circle_ball.center.y - bounding_circle_player.center.y)/distance;
+
+        sprite_set_x(ball.ball_sprite, sprite_x(ball.ball_sprite) - move_x);
+        sprite_set_y(ball.ball_sprite, sprite_y(ball.ball_sprite) - move_y);
+        
+        sprite_set_x(player.player_sprite, sprite_x(player.player_sprite) + move_x);
+        sprite_set_y(player.player_sprite, sprite_y(player.player_sprite) + move_y);
+
+        vector_2d final_velocity;
+        final_velocity.x = -1*sprite_dx(ball.ball_sprite);
+        final_velocity.y = -1*sprite_dy(ball.ball_sprite); 
+        sprite_set_velocity(ball.ball_sprite, final_velocity);
+
+    }
+}
+
 void update_game(game_data &game)
 {
     update_ball(game.ball);
     update_player(game.player);
-    handle_collisions(game.player.player_sprite, game.ball.ball_sprite);
+    handle_collisions(game.player, game.ball);
 }
 
 void draw_game(game_data &game)

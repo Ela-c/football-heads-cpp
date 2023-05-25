@@ -26,6 +26,6 @@ bool in_the_air(const sprite &object);
 
 void keep_sprite_within_screen(sprite &object);
 
-void handle_collisions(sprite s1, sprite s2);
+//void handle_collisions(sprite s1, sprite s2);
 
 #endif
