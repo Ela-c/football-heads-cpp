@@ -16,4 +16,8 @@ enum elasticity_type
 
 void sprite_set_center(sprite &object, double x, double y);
 
+bool in_the_air(const sprite &object);
+
+void keep_sprite_within_screen(sprite &object);
+
 #endif

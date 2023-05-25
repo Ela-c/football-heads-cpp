@@ -10,21 +10,14 @@ int main()
     open_window("Ball Collision", WIDTH, HEIGHT);
     load_resources();
 
-    soccer_ball_data ball = new_ball();
-    player_data player_2 = new_player(2);
-
-    int size = 70;
+    game_data game = new_game();
 
     while (!quit_requested())
     {
         process_events(); // for the quit_requested thing
-        clear_screen(COLOR_WHITE);
-
-        update_ball(ball);
-        fill_rectangle(COLOR_GREEN, WIDTH/2 - size/2, HEIGHT/2 - size/2, size, size);
-        draw_ball(ball);
-        draw_player(player_2);
-        refresh_screen(60);
+        handle_input(game.players);
+        update_game(game);
+        draw_game(game);
     }
 
     close_window("Ball Collision");

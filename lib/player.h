@@ -19,16 +19,18 @@ struct boot_data
 
 struct player_data
 {
-    int side;
+    unsigned short int side;
     team_options team;
-    int score;
+    unsigned int score;
     sprite player_sprite;
     vector_2d velocity;
     vector_2d acceleration;
     boot_data boot;
 };
 
-player_data new_player(int player_side);
+player_data new_player(unsigned short int player_side);
+
+void update_player(player_data &player_to_update);
 
 boot_data new_boot(const player_data &player);
 

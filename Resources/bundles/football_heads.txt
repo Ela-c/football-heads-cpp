@@ -9,3 +9,6 @@ BITMAP,boot_player_2,player2-football-boot-small.png
 BITMAP,south_korea_head,south_korea_player_head.png
 
 // goals
+
+//Fonts
+FONT,roboto,RobotoMono-Medium.ttf,14

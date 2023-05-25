@@ -13,7 +13,7 @@ bitmap team_bitmap(team_options team)
     }
 }
 
-player_data new_player(int player_side)
+player_data new_player(unsigned short int player_side)
 {
     player_data result;
 
@@ -44,6 +44,35 @@ player_data new_player(int player_side)
     result.acceleration.y = 0;
 
     return result;
+}
+
+void apply_gravity_to_player(player_data &player)
+{
+    if (in_the_air(player.player_sprite))
+    {
+        player.velocity.y += GRAVITY;
+    }
+    // if the player is on the floor.
+    else
+    {
+        sprite_set_y(player.player_sprite, HEIGHT - sprite_height(player.player_sprite));
+        player.velocity.y = 0;
+    }
+    sprite_set_dy(player.player_sprite, player.velocity.y);
+}
+
+void update_player(player_data &player_to_update)
+{
+    // move the player
+    update_sprite(player_to_update.player_sprite);
+    
+    player_to_update.velocity.x = sprite_dx(player_to_update.player_sprite);
+    player_to_update.velocity.y = sprite_dy(player_to_update.player_sprite);
+
+    keep_sprite_within_screen(player_to_update.player_sprite);
+
+    // apply gravity to the player when jumping
+    apply_gravity_to_player(player_to_update);
 }
 
 void draw_player(player_data &player)
