@@ -20,15 +20,15 @@ soccer_ball_data new_ball()
     result.static_friction_coefficient = 1;
 
     // set position
-    sprite_set_x(result.ball_sprite, result.center.x - result.radius);
-    sprite_set_y(result.ball_sprite, result.center.y - result.radius);
+    sprite_set_x(result.ball_sprite, screen_center().x);
+    sprite_set_y(result.ball_sprite, 0);
 
     // set collision area for the ball
     //sprite_set_collision_bitmap(result.ball_sprite, );
     //sprite_set_collision_kind(result.ball_sprite, AABB_COLLISIONS);
 
     // set velocity of the ball
-    result.dx = 10;
+    result.dx = 0;
     result.dy = 0;
     sprite_set_dx(result.ball_sprite, result.dx);
     sprite_set_dy(result.ball_sprite, result.dy);

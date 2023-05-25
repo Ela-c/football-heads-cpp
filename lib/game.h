@@ -18,7 +18,7 @@ enum state_option
 
 struct game_data
 {
-    player_data players[NUMBER_OF_PLAYERS];
+    player_data player;
     soccer_ball_data ball;
 };
 
@@ -30,7 +30,7 @@ void draw_game(game_data &game);
 
 void load_resources();
 
-void handle_input(player_data players[]);
+void handle_input(player_data player);
 
 
 
