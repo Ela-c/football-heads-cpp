@@ -6,7 +6,8 @@ BITMAP,boot_player_1,player1-football-boot.png
 BITMAP,boot_player_2,player2-football-boot-small.png
 
 // players head 
-BITMAP,south_korea_head,south_korea_player_head.png
+BITMAP,south_korea_head,south_korea_head.png
+BITMAP,brazil_head,brazil_head.png
 
 // goals
 
