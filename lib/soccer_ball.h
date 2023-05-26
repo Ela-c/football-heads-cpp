@@ -9,15 +9,11 @@
 /**
  * @brief  Data structure representing the abstraction of the soccer ball
  * 
- * @field object                           The object of the ball used to manage the physics and sprite
- * @field center                           The center position of the soccer ball
- * @field radius                           The radius of the soccer ball
+ * @field object    The object of the ball used to manage the physics and sprite
  */
 struct soccer_ball_data
 {                     
-    object_data object;
-    point_2d center;                         
-    double radius;                            
+    object_data object;                                      
 };
 
 /**

@@ -2,9 +2,18 @@
 
 #define DEFAULT_HEAD SOUTH_KOREA
 
-bitmap team_bitmap(head_options team)
+
+/* --------------- PRIVATE FUNCTIONS --------------- */
+
+/**
+ * @brief Converts head options into their respective bitmaps
+ * 
+ * @param head       Head of the choosen character
+ * @return bitmap    bitmap that matches the type of character
+ */
+bitmap character_bitmap(head_options head)
 {
-    switch (team)
+    switch (head)
     {
     case SOUTH_KOREA:
         return bitmap_named("south_korea_head");
@@ -13,14 +22,16 @@ bitmap team_bitmap(head_options team)
     }
 }
 
+/* --------------- END OF PRIVATE FUNCTIONS --------------- */
+
 player_data new_player()
 {
     player_data result;
 
     // set team to default option
     result.head = DEFAULT_HEAD;
-    // create sprite according to selected team
-    result.object._sprite = create_sprite(team_bitmap(result.head));
+    // create sprite according to selected character
+    result.object._sprite = create_sprite(character_bitmap(result.head));
 
     // Position in the center of the screen
     sprite_set_x(result.object._sprite, (screen_width() - sprite_width(result.object._sprite))/2.0);
@@ -40,7 +51,7 @@ player_data new_player()
     result.object.mass = PLAYER_MASS;
 
     // set object friction
-    result.object.friction_coefficient = 0; // no friction is applied to the player
+    result.object.friction_coefficient = NO_FRICTION; // no friction is applied to the player
 
     return result;
 }
@@ -52,10 +63,7 @@ void update_player(player_data &player_to_update)
     
     // update velocity variable 
     player_to_update.object.velocity = sprite_velocity(player_to_update.object._sprite);
-
-    // keep player within the screen
-    keep_sprite_within_screen(player_to_update.object._sprite);
-
+    
     // apply gravity to the player when jumping
     apply_physics(player_to_update.object);
 }

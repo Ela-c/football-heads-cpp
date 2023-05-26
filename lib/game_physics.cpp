@@ -23,33 +23,54 @@ bool in_the_air(const sprite &object)
     return false;
 }
 
-void keep_sprite_within_screen(sprite &object)
+
+/* --------------- PRIVATE FUNCTIONS --------------- */
+
+/**
+ * @brief  Keeps the given object inside the window boundaries
+ * 
+ * @param object  object to analyse
+ */
+void keep_sprite_within_screen(object_data &object)
 {
-    if(sprite_x(object) < 0)
+    if(sprite_x(object._sprite) < 0)
     {
         // If the sprite's x position is less than 0, set it to 0 to keep it within the screen
-        sprite_set_x(object, 0);
+        sprite_set_x(object._sprite, 0);
+        if(object.elasticity != NO_ELASTIC)
+        {
+            object.velocity.x *= -object.elasticity;
+        }
     }
-    else if(sprite_x(object) > screen_width() - sprite_width(object))
+    else if(sprite_x(object._sprite) > screen_width() - sprite_width(object._sprite))
     {
         // If the sprite's x position is greater than the screen width minus the sprite's width,
         // set it to the maximum allowed x position to keep it within the screen
-        sprite_set_x(object, screen_width() - sprite_width(object));
+        sprite_set_x(object._sprite, screen_width() - sprite_width(object._sprite));
+        if(object.elasticity != NO_ELASTIC)
+        {
+            object.velocity.x *= -object.elasticity;
+        }
     }
 
-    if(sprite_y(object) < 0)
+    if(sprite_y(object._sprite) < 0)
     {
         // If the sprite's y position is less than 0, set it to 0 to keep it within the screen
-        sprite_set_y(object, 0);
+        sprite_set_y(object._sprite, 0);
+        if(object.elasticity != NO_ELASTIC)
+        {
+            object.velocity.y *= -object.elasticity;
+            
+        }       
     }
-    else if(sprite_y(object) > screen_height() - sprite_height(object))
-    {
-        // If the sprite's y position is greater than the screen height minus the sprite's height,
-        // set it to the maximum allowed y position to keep it within the screen
-        sprite_set_y(object, screen_height() - sprite_height(object));
-    }
+    sprite_set_velocity(object._sprite, object.velocity);
 }
 
+/**
+ * @brief Applies gravity effect on game objects
+ * 
+ * @param object game object
+ */
 void apply_gravity(object_data &object)
 {
     // apply gravity to the object when it is on the air
@@ -74,6 +95,11 @@ void apply_gravity(object_data &object)
     sprite_set_velocity(object._sprite, object.velocity);
 }
 
+/**
+ * @brief Applies basic friction effect on game objects that are in contact with the ground
+ * 
+ * @param object game object
+ */
 void apply_friction(object_data &object)
 {
     if(not in_the_air(object._sprite))
@@ -92,6 +118,8 @@ void apply_friction(object_data &object)
     // update object velocity
     sprite_set_velocity(object._sprite, object.velocity);
 }
+
+/* --------------- END OF PRIVATE FUNCTIONS --------------- */
 
 void handle_collisions(object_data ob1, object_data ob2)
 {
@@ -122,10 +150,15 @@ void handle_collisions(object_data ob1, object_data ob2)
             factor_ob1 = ob2.mass / ob1.mass;
             factor_ob2 = 1 - factor_ob1;
         }
-        else
+        else if (ob2.mass > ob1.mass)
         {
             factor_ob2 = ob1.mass/ob2.mass;
             factor_ob1 = 1 - factor_ob2;
+        }
+        else
+        {
+            factor_ob2 = 0.5;
+            factor_ob1 = 0.5;   
         }
 
         // update position of object 1 and 2
@@ -136,7 +169,6 @@ void handle_collisions(object_data ob1, object_data ob2)
         sprite_set_y(ob1._sprite, sprite_y(ob1._sprite) + factor_ob1 * move_y);
 
         // Dynamic collision
-        //float ob1.mass, ob2.mass;
         vector_2d normal_to_tangent, tangent;
         double dp_tangent_ob1, dp_tangent_ball, dp_normal_ob1, dp_normal_ball;
 
@@ -172,6 +204,7 @@ void handle_collisions(object_data ob1, object_data ob2)
 
 void apply_physics(object_data &object)
 {
+    keep_sprite_within_screen(object);
     apply_gravity(object);
     apply_friction(object);
 }

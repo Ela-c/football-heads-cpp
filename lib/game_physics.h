@@ -4,14 +4,24 @@
 #include "splashkit.h"
 #include <math.h>
 
-#define GRAVITY 0.3
+#define GRAVITY 0.2
 
 #define BALL_MASS 2
 #define PLAYER_MASS BALL_MASS*50
-#define ELASTIC 0.8
+#define ELASTIC 0.5
 #define NO_ELASTIC 0
+#define HAS_FRICTION 0.8
+#define NO_FRICTION 0
 
-
+/**
+ * @brief  Structure to model a real word object
+ * 
+ * @field _sprite              sprite of the object
+ * @field velocity             object velocity vector
+ * @field elasticity           elasticity of the object
+ * @field mass                 object mass
+ * @field friction_coefficient object friction coefficient 
+ */
 struct object_data
 {
     sprite _sprite;
@@ -40,13 +50,6 @@ void sprite_set_center(sprite &object, double x, double y);
 bool in_the_air(const sprite &object);
 
 /**
- * @brief  Keeps the given sprite inside the window boundaries
- * 
- * @param object  sprite to analyse
- */
-void keep_sprite_within_screen(sprite &object);
-
-/**
  * @brief  Apply physics to any object in the game
  * 
  * @param object  object to apply gravity
@@ -54,7 +57,7 @@ void keep_sprite_within_screen(sprite &object);
 void apply_physics(object_data &object);
 
 /**
- * @brief  Handle collisions between two objects
+ * @brief  Handle static and dynamic collisions between two objects
  * 
  * @param ob1   object 1
  * @param ob2   object 2

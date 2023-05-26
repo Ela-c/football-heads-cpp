@@ -17,11 +17,18 @@ int main()
     while (!quit_requested())
     {
         process_events(); // Processes any pending events
-        handle_input(game.player); // Handles input for the player in the game
-        update_game(game); // Updates the game state based on the current input and logic
-        draw_game(game); // Draws the current game state to the screen
+        
+        if(game.status == ACTIVE)
+        {
+            handle_input(game.player); // Handles input for the player in the game
+            update_game(game); // Updates the game state based on the current input and logic
+            draw_game(game); // Draws the current game state to the screen
+        }
+        else
+        {
+            handle_game_outcome(game);
+        }    
     }
-
     close_window("Ball Collision");
     return 0; // Indicates successful program execution
 }

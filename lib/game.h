@@ -4,20 +4,36 @@
 #include "soccer_ball.h"
 #include "player.h"
 #include "goal.h"
+#include "nerf.h"
+
+#define WIN_SCORE 5
+#define BIG_FONT_SIZE 100
+
+// Enumerates the posible game status
+enum game_status
+{
+    PLAYER_WIN,
+    GAME_OVER,
+    ACTIVE
+};
 
 
 /**
  * @brief game data structure meant to keep track of the game entities
  * 
- * @field player   keeps track of player data
- * @field ball     keeps track of the soccer ball data
- * @field goal     keeps track of the goal
+ * @field player        keeps track of player data
+ * @field ball          keeps track of the soccer ball data
+ * @field goal          keeps track of the goal
+ * @field nerf_list     keeps track of all the nerf entities created in the game
+ * @field status        keeps track of the current game status
  */
 struct game_data
 {
     player_data player;
     soccer_ball_data ball;
     goal_data goal;
+    vector<nerf_data> nerf_list;
+    game_status status;
 };
 
 /**
@@ -46,6 +62,13 @@ void draw_game(game_data &game);
  * 
  */
 void load_resources();
+
+/**
+ * @brief  Displays the corresponding screen based on the game outcome (i.e player wins or game over).
+ * 
+ * @param game  current game data structure
+ */
+void handle_game_outcome(const game_data &game);
 
 /**
  * @brief Handles input for the player in the game. This function listens for keyboard events and updates the player's state accordingly.
