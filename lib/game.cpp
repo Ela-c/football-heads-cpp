@@ -74,21 +74,35 @@ void draw_score(const game_data &game)
     draw_text(score_text, COLOR_BLACK, "roboto", font_size, score_player.x + offset_x, score_player.y + offset_y);
 }
 
+
 /**
- * @brief  Updates the player's score and changes the goal position
+ * @brief  Update the goal properties based on the current goal status
+ * 
+ * @param game  current game
+ */
+
+void update_goal(game_data &game)
+{
+    // check if the player has marked a goal
+    if(sprite_rectangle_collision(game.ball.object._sprite, game.goal.goal_area))
+    {
+        game.goal = new_goal(); // if the player has scored a goal, then create a new goal.
+        game.goal.status = 1;
+    }
+}
+
+/**
+ * @brief  Updates the player's score
  * 
  * @param game  data structure that manages the game entities
  */
 void update_score(game_data &game)
 {
     // check if the player has marked a goal
-    if(sprite_rectangle_collision(game.ball.object._sprite, game.goal.goal_area))
+    if(game.goal.status == 1)
     {
-        game.goal.status = 1;
-        game.player.score ++;
-    
-        // updates goal to a new position
-        update_goal(game.goal);
+        game.goal.status = 0;
+        game.player.score++;
     }
 }
 
@@ -300,7 +314,10 @@ void update_game(game_data &game)
     // handle collisions of all game entities
     handle_all_collisions(game);
     
-    // update player score and goal position
+    // update goal position and status
+    update_goal(game);
+
+    // update player score
     update_score(game);
 
     // update game status

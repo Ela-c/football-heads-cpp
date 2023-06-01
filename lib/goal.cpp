@@ -19,8 +19,3 @@ void draw_goal(const goal_data &goal)
     draw_rectangle(COLOR_RED, goal.goal_area);
     fill_rectangle(COLOR_RED, goal.goal_area);
 }
-
-void update_goal(goal_data &goal)
-{
-    goal = new_goal(); // if the player has scored a goal, then create a new goal.
-}

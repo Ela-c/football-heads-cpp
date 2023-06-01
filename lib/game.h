@@ -6,7 +6,7 @@
 #include "goal.h"
 #include "nerf.h"
 
-#define WIN_SCORE 5
+#define WIN_SCORE 2
 #define BIG_FONT_SIZE 100
 
 // Enumerates the posible game status

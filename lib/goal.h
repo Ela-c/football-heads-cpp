@@ -22,12 +22,6 @@ struct goal_data
  */
 goal_data new_goal();
 
-/**
- * @brief  Update the goal properties based on the current goal status
- * 
- * @param goal  goal to update
- */
-void update_goal(goal_data &goal);
 
 /**
  * @brief  Draw goal on the screen
