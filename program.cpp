@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-    open_window("Ball Collision", WIDTH, HEIGHT);
+    open_window("Football Heads: The Ultimate Challenge", WIDTH, HEIGHT);
     load_resources(); // Loads any required game resources
 
     game_data game = new_game(); // Creates a new game_data object
@@ -29,6 +29,6 @@ int main()
             handle_game_outcome(game);
         }    
     }
-    close_window("Ball Collision");
+    close_window("Football Heads: The Ultimate Challenge");
     return 0; // Indicates successful program execution
 }

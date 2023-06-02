@@ -204,31 +204,11 @@ void update_nerf_list(game_data &game)
  * @brief Display a congratulations screen 
  * 
  */
-void display_win_screen()
+void display_final_screen(string text)
 {
     clear_screen(COLOR_WHITE);
     
     // set text message
-    string text = "YOU WON!";
-    int font_size = BIG_FONT_SIZE; 
-    int text_w = text_width(text, "roboto", font_size);
-    int text_h = text_height(text, "roboto", font_size);
-
-    draw_text(text, COLOR_BLACK, "roboto", font_size, screen_center().x - text_w/2, screen_center().y - text_h/2);
-
-    refresh_screen(60);
-}
-
-/**
- * @brief Display a game over screen
- * 
- */
-void display_game_over_screen()
-{
-    clear_screen(COLOR_WHITE);
-    
-    // set text message
-    string text = "GAME OVER";
     int font_size = BIG_FONT_SIZE; 
     int text_w = text_width(text, "roboto", font_size);
     int text_h = text_height(text, "roboto", font_size);
@@ -320,7 +300,7 @@ void update_game(game_data &game)
     // update player score
     update_score(game);
 
-    // update game status
+    // check if player has won
     update_game_status(game);
 
     // create nerfs periodically
@@ -349,11 +329,11 @@ void handle_game_outcome(const game_data &game)
 {   
     if(game.status == PLAYER_WIN)
     {
-        display_win_screen();
+        display_final_screen("YOU WON!");
     }
     else if(game.status == GAME_OVER)
     {
-        display_game_over_screen();
+        display_final_screen("GAME OVER");
     }
 }
 
