@@ -16,7 +16,7 @@ void draw_button(const button_data &button)
     double offset_x = (button.clickable_area.width - text_w)/2.0;
     double offset_y = (button.clickable_area.height - text_h)/2.0;
 
-    // Draw button's clickable space and inner text
+    // Draw button's clickable area and inner text - The inner text is going too be draw at the center of the clickable area
     draw_rectangle(COLOR_BLACK, button.clickable_area);
     fill_rectangle(COLOR_LIGHT_BLUE, button.clickable_area);
     draw_text(button.text, COLOR_BLACK, "roboto", font_size, button.clickable_area.x+offset_x, button.clickable_area.y+offset_y);
@@ -37,6 +37,7 @@ button_data new_button(const string &text)
     // initialize new button
     button_data result;
     
+    // set button properties - size the clickable area of the button according to text size
     double width = 20 + text_width(text, "roboto", PARAGRAPH_FONT_SIZE) + 20;
     double height = 20 + text_height(text, "roboto", PARAGRAPH_FONT_SIZE) + 20;
     double x = screen_width()/2 - width/2;
