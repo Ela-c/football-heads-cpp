@@ -6,6 +6,12 @@ using namespace std;
 
 /* --------------- PRIVATE FUNCTIONS --------------- */
 
+void restart_game(game_data &game)
+{
+    game = new_game();
+}
+
+
 /**
  * @brief  Makes the score text to be displayed based on the player's score
  * 
@@ -204,16 +210,20 @@ void update_nerf_list(game_data &game)
  * @brief Display a congratulations screen 
  * 
  */
-void display_final_screen(string text)
+void display_final_screen(string text, button_data restart_btn)
 {
     clear_screen(COLOR_WHITE);
     
     // set text message
-    int font_size = BIG_FONT_SIZE; 
+    int font_size = TITLE_FONT_SIZE; 
     int text_w = text_width(text, "roboto", font_size);
     int text_h = text_height(text, "roboto", font_size);
 
+    // Draw message
     draw_text(text, COLOR_BLACK, "roboto", font_size, screen_center().x - text_w/2, screen_center().y - text_h/2);
+
+    // Draw Restart button
+    draw_button(restart_btn);
 
     refresh_screen(60);
 }
@@ -325,15 +335,29 @@ void draw_game(game_data &game)
     refresh_screen(60);
 }
 
-void handle_game_outcome(const game_data &game)
+void handle_game_outcome(game_data &game)
 {   
+    
+    button_data restart_btn;
+
+    // create new restart button
+    restart_btn = new_button("RESTART GAME");
+
     if(game.status == PLAYER_WIN)
     {
-        display_final_screen("YOU WON!");
+        display_final_screen("YOU WON!", restart_btn);
     }
     else if(game.status == GAME_OVER)
     {
-        display_final_screen("GAME OVER");
+        display_final_screen("GAME OVER", restart_btn);
+    }
+
+    if(mouse_clicked(LEFT_BUTTON))
+    {
+        if(button_clicked(restart_btn))
+        {
+            restart_game(game);
+        }
     }
 }
 

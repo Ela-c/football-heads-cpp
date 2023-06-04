@@ -1,0 +1,8 @@
+#ifndef STYLE_H
+#define STYLE_H
+
+#define TITLE_FONT_SIZE 100
+#define SUBTITLE_FONT_SIZE 50
+#define PARAGRAPH_FONT_SIZE 30
+
+#endif

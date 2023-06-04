@@ -5,9 +5,10 @@
 #include "player.h"
 #include "goal.h"
 #include "nerf.h"
+#include "button.h"
+#include "style.h"
 
 #define WIN_SCORE 2
-#define BIG_FONT_SIZE 100
 
 // Enumerates the posible game status
 enum game_status
@@ -35,6 +36,7 @@ struct game_data
     vector<nerf_data> nerf_list;
     game_status status;
 };
+
 
 /**
  * @brief Creates and initializes a new game_data object.
@@ -68,7 +70,7 @@ void load_resources();
  * 
  * @param game  current game data structure
  */
-void handle_game_outcome(const game_data &game);
+void handle_game_outcome(game_data &game);
 
 /**
  * @brief Handles input for the player in the game. This function listens for keyboard events and updates the player's state accordingly.
