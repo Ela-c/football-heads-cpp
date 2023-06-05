@@ -7,6 +7,10 @@ soccer_ball_data new_ball()
     // create ball sprite
     result.object._sprite = create_sprite("soccer_ball");
 
+    // set initial position
+    sprite_set_x(result.object._sprite, screen_width() / 2 - sprite_width(result.object._sprite));
+    sprite_set_y(result.object._sprite, 0);
+
     // set ball mass
     result.object.mass = BALL_MASS;
 
@@ -25,7 +29,7 @@ soccer_ball_data new_ball()
 }
 
 void update_ball(soccer_ball_data &ball)
-{   
+{
     update_sprite(ball.object._sprite);
 
     // update velocity variables
