@@ -10,7 +10,7 @@ well-structured code. It also demonstrates proper use of abstraction and modular
 by using different modules to provide services that help handle the game objects. Each
 module has an API to handle one of the entities.
 
-(Gameplay video)[https://youtu.be/FjaypH4U6CU]
+#### [Gameplay video](https://youtu.be/FjaypH4U6CU)
 
 ### How does the player control the character and head the ball?
 
